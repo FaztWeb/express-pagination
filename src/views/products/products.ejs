@@ -1,0 +1,88 @@
+<% include ../partials/head %>
+
+<div class="container">
+  <div class="row p-5">
+
+    <!-- ITEMS -->
+    <% for(var i = 0; i < products.length; i++) { %>
+      <div class="col-md-4">
+        <div class="p-4">
+          <div class="card">
+            <img src="<%= products[i].cover %>" class="card-img-top">
+            <div class="card-body">
+              <h3 class="card-title"><%= products[i].name %></h3>
+              <p class="card-text"><%= products[i].category %></p>
+              <p class="card-text"><%= products[i].price %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="row">
+    <!-- pagination -->
+    <% if(pages > 0) { %> <!-- show pagination if there is pages -->
+      <nav class="mx-auto">
+        <ul class="pagination">
+          <!-- FIRST ITEM -->
+          <% if(current == 1) { %>
+            <li class="page-item disabled">
+              <a class="page-link" href="#">First</a>
+            </li>
+          <% } else { %>
+            <li class="page-item">
+              <a class="page-link" href="/products/1">First</a>
+            </li>
+          <% } %>
+
+          <!-- ITEMS  -->
+          <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+          <% if(i !== 1) { %>
+            <li class="page-item disabled">
+              <a class="page-link" href="#">...</a>
+            </li>
+          <% } %>
+          <% for(; i <= (Number(current) + 4) && i <= pages; i++) { %>
+            <% if(i == current) { %>
+              <li class="page-item active">
+                <a class="page-link" href="<%= i %>">
+                  <%= i %>
+                </a>
+              </li>
+            <% } else { %>
+              <li class="page-item">
+                <a class="page-link" href="/products/<%= i %>">
+                  <%= i %>
+                </a>
+              </li>
+            <% } %>
+            <% if (i == Number(current) + 4 && i < pages) { %>
+               <li class="page-item disabled">
+                 <a class="page-link" href="#">...</a>
+               </li>
+            <% } %>
+          <% } %>
+
+          <!-- LAST ITEM -->
+          <% if(current == pages) { %>
+            <li class="page-item disabled">
+              <a class="page-link" href="#">
+                Last
+              </a>
+            </li>
+          <% } else { %>
+            <li class="page-item">
+              <a class="page-link" href="/products/<%= pages %>">
+                Last
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      </nav>
+    <% } %>
+  </div>
+</div>
+
+
+<% include ../partials/footer %>
